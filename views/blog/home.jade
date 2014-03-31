@@ -1,0 +1,44 @@
+extends ../layouts/layout
+
+block content
+	.grid-row
+		.row.header
+			div 
+				span.animated.bounceInLeft BL
+				span.animated.bounceInDown
+					img.img-circle(src='Blog_Logo.jpg')
+				span.animated.bounceInRight G!
+			div
+				.quote "Musings of a creator"
+		- if(user)
+			#menu.row.text-center
+				a.btn.btn-primary(href='/blog/new') New Blog Post
+		include ../layouts/flash
+		- if(blogs && blogs.length>0)
+			for blog in blogs
+				.row.blog-post(title=blog.title)
+					img.img-responsive(src='/' + blog.title + '.png')
+					.col-sm-12
+						div.blog-content
+							h2.text-center= blog.title
+							div.meta 
+								span.meta-item
+									span.fa.fa-user 
+									span= blog.author
+								span.meta-item
+									span.fa.fa-calendar 
+									span= blog.published.toDateString()
+								span.meta-item-tags.pull-right
+									span.fa.fa-tags
+									for tag in blog.tags
+										a(href='#', class='tag-' + tag)= tag
+							div.blog-body= blog.summary
+							- if(user)
+								div.text-center
+									a.btn.btn-primary(href='/blog/' + blog.id + '/edit') Edit
+									a.btn.btn-danger(href='/blog/' + blog.id + '/delete') Delete
+			script
+				include ../../public/js/blog.js
+		- else
+			.row.blog-post
+				h2.text-center Sorry! No Blog Posts Exist!

@@ -1,0 +1,21 @@
+extends ../layouts/layout
+
+block content
+	form(action='/blog/' + blog.id + '/update',enctype="multipart/form-data", method='POST', role='form')
+		legend Edit Blog Post
+		.form-group
+			label(for='blogTitle') Title
+			input.form-control(type='text', value= blog.title, id='blogTitle', name='title')
+		.form-group
+			label(for='blogTitle') Blog Title Image (PNG only)
+			input(type='file', id='blogImage', name='file')
+		.form-group
+			label(for='blogTags') Tags
+			input.form-control(type='text', placeholder='Blog Tags', id='blogTags', name='tags', value=blog.tags)
+		.form-group
+			label(for='blogSummary') Summary
+			textarea.form-control(rows="3", id='blogSummary', name='summary')= blog.summary
+		.form-group
+			label(for='blogContent') Blog Content
+			textarea.form-control(rows="20", id="blogContent", name='content')= blog.content
+		button.btn.btn-primary(type='submit') Update

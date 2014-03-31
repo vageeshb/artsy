@@ -1,0 +1,25 @@
+extends ../layouts/layout
+
+block content
+	link(rel="stylesheet" href="/css/highlight.min.css")
+	.grid-row
+		.row.article(id=blog.id)
+			div.article-content
+				h2.text-center= blog.title
+				div.meta 
+					span.meta-item
+						span.fa.fa-user 
+						span= blog.author
+					span.meta-item
+						span.fa.fa-calendar 
+						span= blog.published.toDateString()
+					span.meta-item-tags.pull-right
+						span.fa.fa-tags
+						for tag in blog.tags
+							a(href='#', class='tag-' + tag)= tag
+				- if(user)
+					br
+					div.text-center
+						a.btn.btn-primary(href='/blog/' + blog.id + '/edit') Edit
+						a.btn.btn-danger(href='/blog/' + blog.id + '/delete') Delete
+				div.article-body!= md(blog.content)

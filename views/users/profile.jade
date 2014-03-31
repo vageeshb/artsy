@@ -1,0 +1,25 @@
+//- views/users/profile
+extends ../layouts/layout
+
+block content
+	.page-header.text-center
+		h1
+			span.fa.fa-anchor 
+			| Profile Page
+		a.btn.btn-default.btn-sm(href='/logout') Logout
+
+	.row
+		.col-sm-12
+			.well
+				p
+					span
+						strong User Name: 
+						= user.name
+					br
+					span
+						strong Email: 
+						= user.email
+					br
+					span
+						strong Password: 
+						= user.password

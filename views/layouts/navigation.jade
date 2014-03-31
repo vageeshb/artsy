@@ -1,0 +1,23 @@
+nav(role="navigation").top-nav
+	- if(!user)
+		a(href="/login").pull-right
+			span.fa.fa-user 
+			| Login
+	- else
+		a(href="/logout").pull-right
+			span.fa.fa-user 
+			| Logout
+nav(role="navigation").side-nav
+	a(href="/" ).brand ARTSY
+	a(href="/blog")
+		span.fa.fa-book
+		br
+		| Blog
+	//- a(href='/about')
+		span.fa.fa-info
+		br
+		| About
+		a(href='/magic')
+			span.fa.fa-magic
+			br
+			| Our Magic

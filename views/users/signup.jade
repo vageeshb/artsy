@@ -1,0 +1,27 @@
+//- signup.jade
+extends ../layouts/layout
+
+block content
+	.col-sm-6.col-sm-offset-3
+		h1
+			span.fa.fa-sign-in
+			| Sign Up
+		include ../layouts/flash
+
+		//- Signup form
+		form(action='/signup' method='post')
+			.form-group
+				label Email
+				input.form-control(type='text', placeholder='Enter Email', name='email')
+			.form-group
+				label Password
+				input.form-control(type='password', placeholder='Enter Password', name='password')
+			button.btn.btn-primary(type='submit') Submit 
+
+		hr
+
+		p Already have an account? 
+			a(href='/login') Login
+		p Or go 
+			a(href='/') home.
+			

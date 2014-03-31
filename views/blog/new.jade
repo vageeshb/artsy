@@ -1,0 +1,21 @@
+extends ../layouts/layout
+
+block content
+	form(action='/blog/create',enctype="multipart/form-data", method='POST', role='form')
+		legend New Blog Post
+		.form-group
+			label(for='blogTitle') Title
+			input.form-control(type='text', placeholder='Blog Title', id='blogTitle', name='title')
+		.form-group
+			label(for='blogTitle') Blog Title Image (PNG Only)
+			input(type='file', id='blogImage', name='file')
+		.form-group
+			label(for='blogTags') Tags
+			input.form-control(type='text', placeholder='Blog Tags (Comma Separated Values)', id='blogTags', name='tags')
+		.form-group
+			label(for='blogSummary') Summary
+			textarea.form-control(rows="3", id='blogSummary', name='summary')
+		.form-group
+			label(for='blogContent') Blog Content
+			textarea.form-control(rows="20", id="blogContent", name='content')
+		button.btn.btn-primary(type='submit') Submit 

@@ -55,6 +55,7 @@ module.exports = function(passport) {
 
 		      // set the user's local credentials
 		      newUser.email    	= email;
+		      newUser.name 			=	req.body.name;
 		      newUser.password 	= newUser.generateHash(password);
 		      newUser.role			= "1";
 		      console.log(newUser);

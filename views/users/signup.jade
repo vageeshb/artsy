@@ -11,6 +11,9 @@ block content
 		//- Signup form
 		form(action='/signup' method='post')
 			.form-group
+				label User Name
+				input.form-control(type='text', placeholder='Enter User Name', name='name')
+			.form-group
 				label Email
 				input.form-control(type='text', placeholder='Enter Email', name='email')
 			.form-group
@@ -18,10 +21,4 @@ block content
 				input.form-control(type='password', placeholder='Enter Password', name='password')
 			button.btn.btn-primary(type='submit') Submit 
 
-		hr
-
-		p Already have an account? 
-			a(href='/login') Login
-		p Or go 
-			a(href='/') home.
-			
+		hr		

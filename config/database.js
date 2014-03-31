@@ -2,6 +2,6 @@
 
 module.exports = {
 
-	'url' : 'mongodb://localhost:27017'
+	'url' : 'mongodb://admin:admin@ds041337.mongolab.com:41337/artsy'
 	
 }

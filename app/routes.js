@@ -34,7 +34,7 @@ module.exports = function(app, passport) {
   // ============================================
   // SIGNUP
   // ============================================
-
+  /*
   // Sign up page
   app.get('/signup', function(req, res) {
 
@@ -49,7 +49,7 @@ module.exports = function(app, passport) {
     failureRedirect : '/signup',  // Authentication failure
     failureFlash    : true        // Show flash in failure
   }));
-  
+  */
   // ============================================
   // PROFILE
   // ============================================

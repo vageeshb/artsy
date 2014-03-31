@@ -17,6 +17,7 @@
   "author": "Vageesh B",
   "license": "Self-Owned",
   "dependencies" : {
+    "node" : "v0.10.x",
     "express" : "~3.4.4", 			
     "jade" : "*",
     "mongoose" : "~3.8.1", 			

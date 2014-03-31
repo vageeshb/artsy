@@ -10,6 +10,7 @@ var blogSchema = mongoose.Schema({
 	content		: { type: String, required: true},
 	summary		: { type: String, required: true},
 	author		: { type: String, required: true},
+	imageUrl 	: { type: String},
 	tags			: [],
 	published	: Date
 });

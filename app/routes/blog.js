@@ -27,20 +27,25 @@ exports.show = function(req, res) {
 		if(err) {
 			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
 			res.redirect('/blog');
+		}
+		if(!blog) {
+			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
+			res.redirect('/blog');
 		} else {
+			console.log(blog);
 			// Code highlighting
 			md.setOptions({
-	  		highlight: function (code) {
-	    		return hljs.highlightAuto(code).value;
-	  		}
+		  	highlight: function (code) {
+		   		return www.hljs.highlightAuto(code).value;
+		  	}
 			});
-	 		res.render('blog/show', {
+		 	res.render('blog/show', {
 				title	: 'Artsy - Blog - ' + blog.title,
 				blog 	: blog,
 				md 		: md,
 				user 	: req.user
 			});
-	 	}
+		 }
 	});
 }
 
@@ -85,13 +90,10 @@ exports.create = function(req, res) {
 	newBlog.published	= new Date();
 	newBlog.author 		= req.user.name;
 	newBlog.tags 			= req.body.tags.replace(' ','').split(',');
-	// Setting Path names for blog image File
-	var tempPath 			= req.files.file.path
-		, targetPath 		= path.resolve('./public/img/' + newBlog.title + '.png' );
-
+	newBlog.imageUrl	= req.body.blogImageUrl;
 	newBlog.save(function(err) {
 		if(err) throw err;
-		if (path.extname(req.files.file.name).toLowerCase() === '.png') {
+		/*if (path.extname(req.files.file.name).toLowerCase() === '.png') {
       fs.rename(tempPath, targetPath, function(err) {
         if(err) throw err;
         res.redirect('/blog/' + newBlog.title);
@@ -102,7 +104,8 @@ exports.create = function(req, res) {
         console.error("No Files were uploaded!");
         res.redirect('/blog/' + newBlog.title);
       });
-    }
+    }*/
+    res.redirect('/blog/' + newBlog.title);
 	});
 }
 

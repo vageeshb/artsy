@@ -1,14 +1,13 @@
 extends ../layouts/layout
 
 block content
+	script(type='text/javascript' src='/js/lodash.js')
+	script(type='text/javascript' src='/js/s3upload.min.js')
 	form(action='/blog/create',enctype="multipart/form-data", method='POST', role='form')
 		legend New Blog Post
 		.form-group
 			label(for='blogTitle') Title
 			input.form-control(type='text', placeholder='Blog Title', id='blogTitle', name='title')
-		.form-group
-			label(for='blogTitle') Blog Title Image (PNG Only)
-			input(type='file', id='blogImage', name='file')
 		.form-group
 			label(for='blogTags') Tags
 			input.form-control(type='text', placeholder='Blog Tags (Comma Separated Values)', id='blogTags', name='tags')
@@ -18,4 +17,13 @@ block content
 		.form-group
 			label(for='blogContent') Blog Content
 			textarea.form-control(rows="20", id="blogContent", name='content')
-		button.btn.btn-primary(type='submit') Submit 
+		.form-group
+			input(type='hidden', id='blogImageUrl', name='blogImageUrl')
+		button.btn.btn-primary(type='submit') Submit
+	br
+	div#status.progress
+		div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
+	label(for='blogTitle') Blog Title Image
+	input(type="file", id="files")
+	script
+		include ./upload.min.js

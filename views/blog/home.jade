@@ -17,7 +17,7 @@ block content
 		- if(blogs && blogs.length>0)
 			for blog in blogs
 				.row.blog-post(title=blog.title)
-					img.img-responsive(src='/' + blog.title + '.png')
+					img.img-responsive(src=blog.imageUrl)
 					.col-sm-12
 						div.blog-content
 							h2.text-center= blog.title

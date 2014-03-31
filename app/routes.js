@@ -1,7 +1,12 @@
 // app/routes.js
 // Loading pre-requisites
 var blogRoutes  = require('./routes/blog.js')
-  , path        = require('path');
+  , path        = require('path')
+  , crypto      = require('crypto')
+// File Uploading Config
+  , AWS_ACCESS_KEY  = 'AKIAJYNTOGEHYG2PSKOA'
+  , AWS_SECRET_KEY  = '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'
+  , S3_BUCKET       = 'artsyvb';
 
 module.exports = function(app, passport) {
   
@@ -26,7 +31,7 @@ module.exports = function(app, passport) {
 
   // Process the login form
   app.post('/login', passport.authenticate('login', {
-    successRedirect : '/profile', // Authentication successful
+    successRedirect : '/blog', // Authentication successful
     failureRedirect : '/login',   // Authentication failure
     failureFlash    : true        // Show flash in failure
   }));
@@ -80,27 +85,55 @@ module.exports = function(app, passport) {
   app.get('/blog', blogRoutes.index);
 
   // New blog post
-  app.get('/blog/new', blogRoutes.new);
+  app.get('/blog/new', isLoggedIn, blogRoutes.new);
 
   // Create blog post
-  app.post('/blog/create', blogRoutes.create);
+  app.post('/blog/create', isLoggedIn, blogRoutes.create);
 
   // Edit Blog
-  app.get('/blog/:id/edit', blogRoutes.edit);
+  app.get('/blog/:id/edit', isLoggedIn, blogRoutes.edit);
   // Update Blog
-  app.post('/blog/:id/update', blogRoutes.update);
+  app.post('/blog/:id/update', isLoggedIn, blogRoutes.update);
 
   // Delte blog post
-  app.get('/blog/:id/delete', blogRoutes.delete);
+  app.get('/blog/:id/delete', isLoggedIn, blogRoutes.delete);
 
   // Show Blog
   app.get('/blog/:title', blogRoutes.show);
 
-  // Image paths
+  // Local Image paths
+  /*
   app.get('/:image_name.png', function (req, res) {
     var image_name = req.params.image_name;
     res.sendfile(path.resolve('./public/img/' + image_name + '.png'));
   });
+  */
+
+  // AWS Image Path
+  app.get('/sign_s3', function(req, res){
+    var object_name = req.query.s3_object_name;
+    var mime_type = req.query.s3_object_type;
+
+    var now = new Date();
+    var expires = Math.ceil((now.getTime() + 10000)/1000); // 10 seconds from now
+    var amz_headers = "x-amz-acl:public-read";
+
+    var put_request = "PUT\n\n"+mime_type+"\n"+expires+"\n"+amz_headers+"\n/artsyvb/"+object_name;
+
+    var signature = crypto.createHmac('sha1', AWS_SECRET_KEY).update(put_request).digest('base64');
+    signature = encodeURIComponent(signature.trim());
+    signature = signature.replace('%2B','+');
+
+    var url = 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+object_name;
+    console.log(url);
+    var credentials = {
+        signed_request: url+"?AWSAccessKeyId="+AWS_ACCESS_KEY+"&Expires="+expires+"&Signature="+signature,
+        url: url
+    };
+    res.write(JSON.stringify(credentials));
+    res.end();
+  });
+
 
   app.get('*', function(req, res) {
     res.redirect('/');

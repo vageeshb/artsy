@@ -1,9 +1,10 @@
 // app/routes.js
 // Loading pre-requisites
 var blogRoutes  = require('./routes/blog.js')
+  , userRoutes  = require('./routes/user.js')
   , path        = require('path')
   , crypto      = require('crypto')
-// File Uploading Config
+// AWS S3 File Uploading Config
   , AWS_ACCESS_KEY  = 'AKIAJYNTOGEHYG2PSKOA'
   , AWS_SECRET_KEY  = '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'
   , S3_BUCKET       = 'artsyvb';
@@ -31,7 +32,7 @@ module.exports = function(app, passport) {
 
   // Process the login form
   app.post('/login', passport.authenticate('login', {
-    successRedirect : '/blog', // Authentication successful
+    successRedirect : '/profile', // Authentication successful
     failureRedirect : '/login',   // Authentication failure
     failureFlash    : true        // Show flash in failure
   }));
@@ -60,15 +61,14 @@ module.exports = function(app, passport) {
   // ============================================
 
   // User Profile Page
-  app.get('/profile', isLoggedIn, function(req, res) {
-    
-    // Render the logged in user profile
-    res.render('users/profile.jade', {
-      user: req.user      // Extract user from request and return
-    });
-
-  });
+  app.get('/profile', isLoggedIn, userRoutes.profile);
   
+  // Edit Profile Page
+  app.get('/profile/edit', isLoggedIn, userRoutes.edit);
+
+  // Update Profile
+  app.post('/profile/edit', isLoggedIn, userRoutes.update);
+
   // ============================================
   // LOGOUT
   // ============================================
@@ -98,16 +98,14 @@ module.exports = function(app, passport) {
   // Delte blog post
   app.get('/blog/:id/delete', isLoggedIn, blogRoutes.delete);
 
+  // Publish blog post
+  app.get('/blog/:id/publish', isLoggedIn, blogRoutes.publish);
+
+  // Unpublish blog post
+  app.get('/blog/:id/unpublish', isLoggedIn, blogRoutes.unpublish);
+
   // Show Blog
   app.get('/blog/:title', blogRoutes.show);
-
-  // Local Image paths
-  /*
-  app.get('/:image_name.png', function (req, res) {
-    var image_name = req.params.image_name;
-    res.sendfile(path.resolve('./public/img/' + image_name + '.png'));
-  });
-  */
 
   // AWS Image Path
   app.get('/sign_s3', function(req, res){

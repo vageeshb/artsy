@@ -1,14 +1,17 @@
 nav(role="navigation").top-nav
+	a(href="/" ).brand ARTSY
 	- if(!user)
 		a(href="/login").pull-right
 			span.fa.fa-user 
 			| Login
 	- else
 		a(href="/logout").pull-right
-			span.fa.fa-user 
+			span.fa.fa-sign-out
 			| Logout
+		a(href="/profile").pull-right
+			span.fa.fa-user 
+			| Profile
 nav(role="navigation").side-nav
-	a(href="/" ).brand ARTSY
 	a(href="/blog")
 		span.fa.fa-book
 		br

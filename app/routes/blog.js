@@ -9,8 +9,9 @@ var Blog 	= require('../models/blog.js')
 
 // Exposing the routes for blog
 
+// INDEX Route
 exports.index = function(req, res) {
-	Blog.find({}, function(err, blogs) {
+	Blog.find({"isPublished" : "true"}, function(err, blogs) {
 		if(err) throw err;
 		res.locals.messages = req.flash();
 		res.render('blog/home', {
@@ -19,9 +20,9 @@ exports.index = function(req, res) {
     	user 		: req.user
   	});	
 	});
-	//console.log(message.error);
 }
 
+// Blog Post Show Route
 exports.show = function(req, res) {
 	Blog.findOne({'title' : req.params.title}, function(err, blog) {
 		if(err) {
@@ -49,6 +50,7 @@ exports.show = function(req, res) {
 	});
 }
 
+// Blog Post Edit Route
 exports.edit = function(req, res) {
 	Blog.findById(req.params.id, function(err, blog) {
 		if(err) throw err;
@@ -60,13 +62,13 @@ exports.edit = function(req, res) {
 	});
 }
 
+// Blog Post Update Route
 exports.update = function(req, res) {
-
 	Blog.findByIdAndUpdate(req.params.id, {
 		title 		:  	req.body.title,
 	  content		: 	req.body.content,
 		summary		: 	req.body.summary,
-		tags			: 	req.body.tags.replace(' ','').split(',')
+		tags			: 	req.body.tags.split(',')
 	}, function(err, data) {
 		if(err) throw err;
 		console.log('Blog updated');
@@ -74,6 +76,7 @@ exports.update = function(req, res) {
 	});
 }
 
+// New Blog Post Route
 exports.new = function(req, res) {
 	res.render('blog/new', {
 		title: 'Artsy - Blog - New Blog Post',
@@ -81,34 +84,25 @@ exports.new = function(req, res) {
 	});
 }
 
+// Create Blog Post Route
 exports.create = function(req, res) {
 	// Creating Blog object
-	var newBlog 			= new Blog();
-	newBlog.title 		= req.body.title;
-	newBlog.content		= req.body.content;
-	newBlog.summary		= req.body.summary;
-	newBlog.published	= new Date();
-	newBlog.author 		= req.user.name;
-	newBlog.tags 			= req.body.tags.replace(' ','').split(',');
-	newBlog.imageUrl	= req.body.blogImageUrl;
+	var newBlog 				= new Blog();
+	newBlog.title 			= req.body.title;
+	newBlog.content			= req.body.content;
+	newBlog.summary			= req.body.summary;
+	newBlog.published		= new Date();
+	newBlog.author 			= req.user.name;
+	newBlog.tags 				= req.body.tags.split(',');
+	newBlog.imageUrl		= req.body.blogImageUrl;
+	newBlog.isPublished 	= false;
 	newBlog.save(function(err) {
 		if(err) throw err;
-		/*if (path.extname(req.files.file.name).toLowerCase() === '.png') {
-      fs.rename(tempPath, targetPath, function(err) {
-        if(err) throw err;
-        res.redirect('/blog/' + newBlog.title);
-      });
-    } else {
-      fs.unlink(tempPath, function (err) {
-        if (err) throw err;
-        console.error("No Files were uploaded!");
-        res.redirect('/blog/' + newBlog.title);
-      });
-    }*/
-    res.redirect('/blog/' + newBlog.title);
+		res.redirect('/blog/' + newBlog.title);
 	});
 }
 
+// Delete Blog Post Route
 exports.delete = function(req, res) {
 	// Getting Blog Id
 	var blogId = req.params.id;
@@ -121,5 +115,23 @@ exports.delete = function(req, res) {
 			console.log('Blog title image was deleted');
 		});
 		res.redirect('/blog');
+	});
+}
+
+// Publish Blog Post
+exports.publish = function(req, res) {
+	var blogId = req.params.id;
+	Blog.findByIdAndUpdate(blogId, { isPublished : true }, function(err) {
+		if(err) throw err;
+		res.redirect('/profile');
+	});
+}
+
+// Publish Blog Post
+exports.unpublish = function(req, res) {
+	var blogId = req.params.id;
+	Blog.findByIdAndUpdate(blogId, { isPublished : false }, function(err) {
+		if(err) throw err;
+		res.redirect('/profile');
 	});
 }

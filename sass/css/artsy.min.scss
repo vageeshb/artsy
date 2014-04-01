@@ -2,55 +2,43 @@
   background: none repeat scroll 0 0 #E5E5E5;
 }
 
-.side-nav {
+@media all and (min-width: 520px) {
 
-  background: none repeat scroll 0 0 #2A2A2A;
-  height: 100%;
-  position: fixed;
-  width: 100px;
-  z-index: 999;
-  text-align: center;
-  
-  .brand {
-    letter-spacing: 3px;
-    background: none repeat scroll 0 0 #990033;
-    color: #333333;
-    font-size: 18px;
-    height: 50px;
-    border: 3px solid #990033;
-  }
- 
-  .brand:hover,
-  .brand:focus {
-    text-decoration: none;
-    color: #FFF;
-    border: 3px solid #2A2A2A;
-  }
+  .side-nav {
 
-  a {
-    padding-top: 10px;
-    color: #F1F1F1;
-    height: 80px;
-    display: block;
-    font-size: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-bottom: 1px solid black;
+    background: none repeat scroll 0 0 #2A2A2A;
+    height: 100%;
+    position: fixed;
+    width: 100px;
+    z-index: 999;
+    text-align: center;
+    margin-top: 50px;
 
-    .fa {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: white;
+    a {
+      padding-top: 10px;
+      color: #F1F1F1;
+      height: 80px;
+      display: block;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 1px solid black;
+
+      .fa {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: white;
+      }
     }
-  }
-  
-  a:hover, a:focus {
-    color: #990033;
-    background: #151515;
-
-    .fa {
+    
+    a:hover, a:focus {
       color: #990033;
+      background: #151515;
+
+      .fa {
+        color: #990033;
+      }
     }
   }
 }
@@ -61,6 +49,26 @@
   width: 100%;
   position: fixed;
   z-index: 999;
+  
+  .brand {
+    float: left;
+    padding-top: 10px;
+    letter-spacing: 3px;
+    background: none repeat scroll 0 0 #990033;
+    color: #333333;
+    font-size: 18px;
+    height: 50px;
+    font-weight: 600;
+    border: 3px solid #990033;
+  }
+   
+  .brand:hover,
+  .brand:focus {
+    text-decoration: none;
+    color: #FFF;
+    border: 3px solid #151515;
+  }
+
   a {
     color: #F1F1F1;
     width: 100px;
@@ -90,10 +98,14 @@
   }
 }
 
+@media all and (min-width: 520px) {
+  .grid-row {
+    margin-left: 100px;
+    margin-bottom: 10px;
+  }
+}
 .grid-row {
-  margin-left: 100px;
-  margin-bottom: 10px;
-
+ 
   .grid-box {
     height: 40rem;
     
@@ -245,4 +257,29 @@
 pre {
   background-color: #292929;
   color: white;
+}
+
+.blogList{
+  background: white;
+}
+
+#social-links {
+  padding: 10px;
+  text-align: center;
+  a { 
+    color:#9B9B9B; 
+    display:inline-block; 
+    font-size: 14px;
+    height:40px; 
+    width:40px; 
+    border-radius:50%; /* make rounded */
+    span {
+      color: #FFF;
+      font-size:32px; 
+      padding: 5px;
+    }
+  }
+  #sl-facebook {
+    background-color: #43609C;
+  }
 }

@@ -6,6 +6,10 @@ block content
 		.row.article(id=blog.id)
 			div.article-content
 				h2.text-center= blog.title
+				div#social-links
+					a(id="sl-facebook", title="Share this post?", onclick="window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebook-share-dialog','width=626,height=436'); return false;" href="#")
+						span.fa.fa-facebook
+						| Share
 				div.meta 
 					span.meta-item
 						span.fa.fa-user 
@@ -23,3 +27,15 @@ block content
 						a.btn.btn-primary(href='/blog/' + blog.id + '/edit') Edit
 						a.btn.btn-danger(href='/blog/' + blog.id + '/delete') Delete
 				div.article-body!= md(blog.content)
+			script
+				| $(window).scroll(function() {
+				|	var offset = $(window).scrollTop();
+				|	offset     = offset * 20;
+				|	$('#social-links a span').css({
+				|		'-moz-transform': 'rotate(' + offset + 'deg)',
+				|		'-webkit-transform': 'rotate(' + offset + 'deg)',
+				|		'-o-transform': 'rotate(' + offset + 'deg)',
+				|		'-ms-transform': 'rotate(' + offset + 'deg)',
+				|		'transform': 'rotate(' + offset + 'deg)',
+				|	});
+				| });

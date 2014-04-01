@@ -3,7 +3,7 @@ extends ../layouts/layout
 block content
 	script(type='text/javascript' src='/js/lodash.js')
 	script(type='text/javascript' src='/js/s3upload.min.js')
-	form(action='/blog/create',enctype="multipart/form-data", method='POST', role='form')
+	form(action='/blog/create', method='POST', role='form')
 		legend New Blog Post
 		.form-group
 			label(for='blogTitle') Title

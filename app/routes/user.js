@@ -12,6 +12,7 @@ module.exports = {
 		Blog.find({ author : req.user.name }, function(err, blogs) {
 			if(err) throw err;
 			res.render('users/profile', {
+				title :   'Profile',
 				user 	: 	req.user,
 				blogs : 	blogs
 			});	
@@ -23,6 +24,7 @@ module.exports = {
 	edit : function(req, res) {
 		res.locals.messages = req.flash();
 		res.render('users/edit', {
+			title :   'Edit Profile',
 			user 	: 	req.user
 		});
 	},
@@ -66,6 +68,7 @@ module.exports = {
 				Blog.find({author: userName}, function(err, blogs) {
 					if(err) throw err;
 					res.render('users/show', {
+						title 				:   user.name,
 						userProfile 	: 	user,
 						blogs 				: 	blogs,
 						md 						: 	md

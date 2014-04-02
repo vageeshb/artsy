@@ -15,7 +15,7 @@ exports.index = function(req, res) {
 		if(err) throw err;
 		res.locals.messages = req.flash();
 		res.render('blog/home', {
-   		title 	: 'Artsy - Blog',
+   		title 	: 'Blog',
    		blogs 	: blogs,
     	user 		: req.user
   	});	
@@ -40,7 +40,7 @@ exports.show = function(req, res) {
 		  	}
 			});
 		 	res.render('blog/show', {
-				title	: 'Artsy - Blog - ' + blog.title,
+				title	: blog.title,
 				blog 	: blog,
 				md 		: md,
 				user 	: req.user
@@ -72,7 +72,7 @@ exports.edit = function(req, res) {
 	Blog.findById(req.params.id, function(err, blog) {
 		if(err) throw err;
  		res.render('blog/edit', {
-			title	: 'Artsy - Blog - ' + blog.title,
+			title	: blog.title,
 			blog 	: blog,
 			user 	: req.user
 		});
@@ -96,7 +96,7 @@ exports.update = function(req, res) {
 // New Blog Post Route
 exports.new = function(req, res) {
 	res.render('blog/new', {
-		title: 'Artsy - Blog - New Blog Post',
+		title: 'New Blog Post',
 		user: req.user
 	});
 }

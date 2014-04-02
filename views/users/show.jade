@@ -1,0 +1,32 @@
+extends ../layouts/layout
+
+block content
+	.grid-row
+		.row
+			.user-header.text-center
+				h2
+					span.fa.fa-user  
+					|  #{userProfile.name}
+		.row
+			.col-sm-5.text-center.visible-lg.visible-md.visible-sm
+				img.user-avatar(src='../Blog_Logo.jpg')
+			.col-sm-7.well
+				div.user-bio!= md(userProfile.bio)
+	.grid-row
+		.row.text-center
+			h2
+				span.fa.fa-book  
+				|  Blog Posts
+		.well
+			for blog in blogs
+				.row.user-post.text-center(title='Go To ' + blog.title, name=blog.title)
+					h4= blog.title
+					span
+						span.fa.fa-calendar 
+						span(title='Published On')= blog.published.toDateString()
+					span 
+						span.fa.fa-tags
+						for tag in blog.tags
+							a(href='#', class='tag-' + tag)= tag
+	script
+		include ../../public/js/user.min.js

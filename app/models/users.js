@@ -9,7 +9,8 @@ var userSchema = mongoose.Schema({
   name        : String,
 	email				: String,
 	password		: String,
-  role        : String
+  role        : String,
+  bio 				: String
 });
 
 // User Methods

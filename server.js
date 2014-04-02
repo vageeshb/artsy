@@ -41,8 +41,7 @@ app.configure(function() {
     sass.middleware({
       src: __dirname + '/sass',
       dest: __dirname + '/public',
-      outputStyle: 'compressed',
-      debug: true
+      outputStyle: 'compressed'
     })
   );
   

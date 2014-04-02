@@ -33,7 +33,6 @@ exports.show = function(req, res) {
 			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
 			res.redirect('/blog');
 		} else {
-			console.log(blog);
 			// Code highlighting
 			md.setOptions({
 		  	highlight: function (code) {
@@ -47,6 +46,24 @@ exports.show = function(req, res) {
 				user 	: req.user
 			});
 		 }
+	});
+}
+
+// Create Blog Post Route
+exports.create = function(req, res) {
+	// Creating Blog object
+	var newBlog 				= new Blog();
+	newBlog.title 			= req.body.title;
+	newBlog.content			= req.body.content;
+	newBlog.summary			= req.body.summary;
+	newBlog.published		= new Date();
+	newBlog.author 			= req.user.name;
+	newBlog.tags 				= req.body.tags.split(',');
+	newBlog.imageUrl		= req.body.blogImageUrl;
+	newBlog.isPublished 	= false;
+	newBlog.save(function(err) {
+		if(err) throw err;
+		res.redirect('/blog/' + newBlog.title);
 	});
 }
 
@@ -81,24 +98,6 @@ exports.new = function(req, res) {
 	res.render('blog/new', {
 		title: 'Artsy - Blog - New Blog Post',
 		user: req.user
-	});
-}
-
-// Create Blog Post Route
-exports.create = function(req, res) {
-	// Creating Blog object
-	var newBlog 				= new Blog();
-	newBlog.title 			= req.body.title;
-	newBlog.content			= req.body.content;
-	newBlog.summary			= req.body.summary;
-	newBlog.published		= new Date();
-	newBlog.author 			= req.user.name;
-	newBlog.tags 				= req.body.tags.split(',');
-	newBlog.imageUrl		= req.body.blogImageUrl;
-	newBlog.isPublished 	= false;
-	newBlog.save(function(err) {
-		if(err) throw err;
-		res.redirect('/blog/' + newBlog.title);
 	});
 }
 

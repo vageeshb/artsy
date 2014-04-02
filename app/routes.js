@@ -63,6 +63,9 @@ module.exports = function(app, passport) {
   // User Profile Page
   app.get('/profile', isLoggedIn, userRoutes.profile);
   
+  // User Public Profile Page
+  app.get('/user/:name', userRoutes.show);
+
   // Edit Profile Page
   app.get('/profile/edit', isLoggedIn, userRoutes.edit);
 

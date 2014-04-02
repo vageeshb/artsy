@@ -1,7 +1,19 @@
+/* Custom Variabled */
+// Color
+$primary-color: #990033;
+$secondary-color: #777777;
+$borderline-color: #CBCBCB;
+// Font Size
+$font-size-1: 18px;
+$font-size-2: 16px;
+$font-size-3: 14px;
+$font-size-4: 12px;
+
 .wrapper {
   background: none repeat scroll 0 0 #E5E5E5;
 }
 
+// Navigation Styles
 @media all and (min-width: 520px) {
 
   .side-nav {
@@ -19,7 +31,7 @@
       color: #F1F1F1;
       height: 80px;
       display: block;
-      font-size: 14px;
+      font-size: $font-size-3;
       letter-spacing: 1px;
       text-transform: uppercase;
       text-decoration: none;
@@ -33,11 +45,11 @@
     }
     
     a:hover, a:focus {
-      color: #990033;
+      color: $primary-color;
       background: #151515;
 
       .fa {
-        color: #990033;
+        color: $primary-color;
       }
     }
   }
@@ -54,12 +66,12 @@
     float: left;
     padding-top: 10px;
     letter-spacing: 3px;
-    background: none repeat scroll 0 0 #990033;
+    background: none repeat scroll 0 0 $primary-color;
     color: #333333;
-    font-size: 18px;
+    font-size: $font-size-1;
     height: 50px;
     font-weight: 600;
-    border: 3px solid #990033;
+    border: 3px solid $primary-color;
   }
    
   .brand:hover,
@@ -74,7 +86,7 @@
     width: 100px;
     height: 100%;
     display: block;
-    font-size: 14px;
+    font-size: $font-size-3;
     letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration: none;
@@ -82,22 +94,23 @@
     text-align: center;
     padding-top: 15px;
     .fa {
-      font-size: 16px;
+      font-size: $font-size-2;
       margin-right: 3px;
       color: white;
     }
   }
   
   a:hover, a:focus {
-    color: #990033;
+    color: $primary-color;
     background: #151515;
 
     .fa {
-      color: #990033;
+      color: $primary-color;
     }
   }
 }
 
+// Grid Styles
 @media all and (min-width: 520px) {
   .grid-row {
     margin-left: 100px;
@@ -105,7 +118,7 @@
   }
 }
 .grid-row {
- 
+  border-bottom: 1px solid $primary-color;
   .grid-box {
     height: 40rem;
     
@@ -138,7 +151,7 @@
           a {
             color: #FFF;
             width: 100%;
-            font-size: 14px;
+            font-size: $font-size-3;
             letter-spacing: 1px;
             text-transform: uppercase;
             text-decoration: none;
@@ -149,7 +162,7 @@
           }
         }
         li:hover, li:focus {
-          background-color: #990033;
+          background-color: $primary-color;
         }
       }
     }
@@ -167,6 +180,7 @@
   padding: 6px;
 }
 
+// Blog Styles
 .header {
   text-align: center;
   margin-bottom: 10px;
@@ -183,12 +197,13 @@
     }
   }
   .quote {
-    font-size: 18px;
+    font-size: $font-size-1;
     letter-spacing: 3px;
     color: #808080;
     font-style: italic;
   }
 }
+
 .blog-post, .article {
   margin-top: 20px;
   border: 1px solid #DBDBDB;
@@ -197,20 +212,23 @@
     margin: auto;
     margin-top: 5px;
     padding: 5px;
-    border: 1px solid #CBCBCB;
+    border: 1px solid $borderline-color;
   }
   .meta {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     line-height: 3;
-    font-size: 12px;
+    font-size: $font-size-4;
     letter-spacing: 2px;
     color: #9E9E9E;
     margin-top: 10px;
     margin-right: 10px;
-    border-top: 1px solid #CBCBCB;
-    border-bottom: 1px solid #CBCBCB;
+    border-top: 1px solid $borderline-color;
+    border-bottom: 1px solid $borderline-color;
     .meta-item {
       margin-right: 10px;
+      span a {
+        color: #9E9E9E;
+      }
     }
     .meta-item:hover, .meta-item:focus {
       text-decoration: underline;
@@ -232,17 +250,17 @@
   }
   .blog-body {
     padding-top: 20px;
-    font-size: 16px;
+    font-size: $font-size-2;
     letter-spacing: 1px;
     text-align: center;
   }
   .article-body {
     padding-top: 20px;
-    font-size: 16px;
+    font-size: $font-size-2;
     letter-spacing: 1px;
     text-align: justify;
     hr {
-      border-color: #CBCBCB;
+      border-color: $borderline-color;
     }
   }
 }
@@ -269,7 +287,7 @@ pre {
   a { 
     color:#9B9B9B; 
     display:inline-block; 
-    font-size: 14px;
+    font-size: $font-size-3;
     height:40px; 
     width:40px; 
     border-radius:50%; /* make rounded */
@@ -282,4 +300,48 @@ pre {
   #sl-facebook {
     background-color: #43609C;
   }
+}
+.page-header {
+  a.btn {
+    margin-right: 5px;
+  }
+}
+
+// User Styles
+.user-header {
+  border-bottom: 1px solid $primary-color;
+  margin: 20px 0px;
+  padding-bottom: 10px;
+}
+.user-bio {
+  color: #777777;
+  font-size: $font-size-1;
+  letter-spacing: 1px;
+}
+.user-avatar {
+  text-align: center;
+  background-color: $primary-color;
+  border: 1px solid $primary-color;
+  border-radius: 4px;
+  display: inline-block;
+  height: auto;
+  line-height: 1.42857;
+  width: 240px;
+  padding: 4px;
+}
+.user-post {
+  border-top: 1px solid $borderline-color;
+  border-bottom: 1px solid $borderline-color;
+  margin: 10px;
+  padding-bottom: 10px;
+  color: $secondary-color;
+  font-size: $font-size-4;
+  span, a, a:hover {
+    padding-right: 5px;
+    color: $secondary-color;
+  }
+}
+.user-post:hover, .user-post:focus {
+  background-color: #E5E5E5;
+  cursor: pointer;
 }

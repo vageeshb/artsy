@@ -13,15 +13,18 @@ block content
 			input(type="hidden", name="userId", id="userId", value=user.id).form-control
 			.form-group
 				label User Name
-				input.form-control(type='text', name='name', value= user.name)
+				input.form-control(disabled= true, type='text', name='name', value= user.name)
 			.form-group
 				label Email
-				input.form-control(type='text', name='email', value= user.email)
+				input.form-control(disabled= true, type='text', name='email', value= user.email)
 			.form-group
 				label Old Password
 				input.form-control(type='password', placeholder='Enter Your Old Password', name='oldPassword')
 			.form-group
 				label New Password
 				input.form-control(type='password', placeholder='Enter Your New Password', name='newPassword')
+			.form-group
+				label Biography
+				textarea.form-control(rows=15, name='bio')= user.bio
 			button.btn.btn-primary(type='submit') Submit 			
 			hr

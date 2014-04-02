@@ -13,10 +13,10 @@ block content
 				div.meta 
 					span.meta-item
 						span.fa.fa-user 
-						span= blog.author
+						span: a(href='/user/' + blog.author, title='Show Profile')= blog.author
 					span.meta-item
 						span.fa.fa-calendar 
-						span= blog.published.toDateString()
+						span(title='Published On')= blog.published.toDateString()
 					span.meta-item-tags.pull-right
 						span.fa.fa-tags
 						for tag in blog.tags

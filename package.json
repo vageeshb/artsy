@@ -18,14 +18,13 @@
   "license": "Self-Owned",
   "dependencies" : {
     "express" : "~3.4.4", 			
-    "jade" : "*",
-    "crypto" : "*",
+    "jade" : "~1.3.0",
     "mongoose" : "~3.8.1", 			
     "passport" : "~0.1.17", 		
     "passport-local" : "~0.1.6", 	
     "connect-flash" : "~0.1.1", 	
-    "bcrypt-nodejs" : "*",
-    "node-sass" : "*",
-    "marked" :"*"
+    "bcrypt-nodejs" : "~0.0.3",
+    "node-sass" : "~0.8.4",
+    "marked" :"~0.3.2"
   }
 }

@@ -28,7 +28,7 @@ exports.index = function(req, res) {
 
 // Blog Post Show Route
 exports.show = function(req, res) {
-	var title = req.params.title.replace(/-/g,' ');
+	var title = req.params.title;
 	Blog.findOne({'title' : title, isPublished: true}, function(err, blog) {
 		if(err) {
 			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');

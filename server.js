@@ -22,6 +22,9 @@ require('./config/passport.js')(passport);
 // Application Config
 app.configure(function() {
 
+  // Compress the files before sending
+  app.use(express.compress());
+  
   // set up the express application
   app.use(express.logger('dev')); // log every request to the console
   app.use(express.cookieParser()); // Cookies (Needed for authorization)

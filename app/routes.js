@@ -95,6 +95,7 @@ module.exports = function(app, passport) {
 
   // Edit Blog
   app.get('/blog/:id/edit', isLoggedIn, blogRoutes.edit);
+  app.post('/blog/preview', isLoggedIn, blogRoutes.preview);
   // Update Blog
   app.post('/blog/:id/update', isLoggedIn, blogRoutes.update);
 

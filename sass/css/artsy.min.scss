@@ -345,3 +345,29 @@ pre {
   background-color: #E5E5E5;
   cursor: pointer;
 }
+.preview-modal-dialog {
+  color: #777;
+  margin: 40px;
+  padding: 20px;
+  background: white;
+  font-size: $font-size-2;
+  letter-spacing: 1px;
+  text-align: center;
+  .preview-modal-header {
+    border-bottom: 1px solid $primary-color;
+    padding-bottom: 10px;
+  }
+  .preview-modal-body {
+    padding-top: 20px;
+    font-size: $font-size-2;
+    letter-spacing: 1px;
+    text-align: justify;
+    hr {
+      border-color: $borderline-color;
+    }
+  }
+  .preview-modal-footer {
+    border-top: 1px solid $primary-color;
+    padding-top: 10px;
+  }
+}

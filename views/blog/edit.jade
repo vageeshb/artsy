@@ -3,25 +3,40 @@ extends ../layouts/layout
 block content
 	script(type='text/javascript' src='/js/lodash.js')
 	script(type='text/javascript' src='/js/s3upload.min.js')
-	form(action='/blog/' + blog.id + '/update', method='POST', role='form')
-		legend Edit Blog Post
-		.form-group
-			label(for='blogTitle') Title
-			input.form-control(type='text', value= blog.title, id='blogTitle', name='title')
-		.form-group
-			label(for='blogTags') Tags
-			input.form-control(type='text', placeholder='Blog Tags', id='blogTags', name='tags', value=blog.tags)
-		.form-group
-			label(for='blogSummary') Summary
-			textarea.form-control(rows="3", id='blogSummary', name='summary')= blog.summary
-		.form-group
-			label(for='blogContent') Blog Content
-			textarea.form-control(rows="20", id="blogContent", name='content')= blog.content
-		button.btn.btn-primary(type='submit') Update
-	br
-	div#status.progress
-		div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
-	label(for='blogTitle') Blog Title Image
-	input(type="file", id="files")
+	link(rel="stylesheet" href="/css/highlight.min.css")
+	.grid-row
+		form(action='/blog/' + blog.id + '/update', method='POST', role='form')
+			legend Edit Blog Post
+			.form-group
+				label(for='blogTitle') Title
+				input.form-control(type='text', value= blog.title, id='blogTitle', name='title')
+			.form-group
+				label(for='blogTags') Tags
+				input.form-control(type='text', placeholder='Blog Tags', id='blogTags', name='tags', value=blog.tags)
+			.form-group
+				label(for='blogSummary') Summary
+				textarea.form-control(rows="3", id='blogSummary', name='summary')= blog.summary
+			.form-group
+				label(for='blogContent') Blog Content
+				textarea.form-control(rows="20", id="blogContent", name='content')= blog.content
+			button.btn.btn-primary(type='submit') Update
+			a#myPreview.btn.btn-primary(href='#preview-modal', data-toggle='modal') Preview
+		br
+		div#status.progress
+			div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
+		label(for='blogTitle') Blog Title Image
+		input(type="file", id="files")
+		br
+		#preview-modal.modal.fade
+			.preview-modal-dialog
+				.preview-modal-header
+					button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+					h3.modal-title= blog.title
+				.preview-modal-body
+					#previewContent
+				.preview-modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
 	script
 		include ./upload.min.js
+	script
+		include ./modal.min.js

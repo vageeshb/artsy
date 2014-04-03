@@ -3,9 +3,13 @@
 var Blog 	= require('../models/blog.js')
 	, flash = require('connect-flash')
 	, path 	= require('path')
-  , fs 		= require('fs')
-  , md 		= require('marked')
-  , hljs  = require('highlight.js');
+	, fs 		= require('fs')
+	, hljs  = require('highlight.js')
+	, md 		= require('marked').setOptions({
+							highlight: function (code) {
+								return hljs.highlightAuto(code).value;
+							}
+						});
 
 // Exposing the routes for blog
 
@@ -15,16 +19,17 @@ exports.index = function(req, res) {
 		if(err) throw err;
 		res.locals.messages = req.flash();
 		res.render('blog/home', {
-   		title 	: 'Blog',
-   		blogs 	: blogs,
-    	user 		: req.user
-  	});	
+			title 	: 'Blog',
+			blogs 	: blogs,
+			user 		: req.user
+		});	
 	});
 }
 
 // Blog Post Show Route
 exports.show = function(req, res) {
-	Blog.findOne({'title' : req.params.title}, function(err, blog) {
+	var title = req.params.title.replace(/-/g,' ');
+	Blog.findOne({'title' : title, isPublished: true}, function(err, blog) {
 		if(err) {
 			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
 			res.redirect('/blog');
@@ -33,13 +38,7 @@ exports.show = function(req, res) {
 			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
 			res.redirect('/blog');
 		} else {
-			// Code highlighting
-			md.setOptions({
-		  	highlight: function (code) {
-		   		return www.hljs.highlightAuto(code).value;
-		  	}
-			});
-		 	res.render('blog/show', {
+			res.render('blog/show', {
 				title	: blog.title,
 				blog 	: blog,
 				md 		: md,
@@ -71,9 +70,11 @@ exports.create = function(req, res) {
 exports.edit = function(req, res) {
 	Blog.findById(req.params.id, function(err, blog) {
 		if(err) throw err;
- 		res.render('blog/edit', {
+		// Sending markdown for preview
+		res.render('blog/edit', {
 			title	: blog.title,
 			blog 	: blog,
+			md 		: md,
 			user 	: req.user
 		});
 	});
@@ -83,7 +84,7 @@ exports.edit = function(req, res) {
 exports.update = function(req, res) {
 	Blog.findByIdAndUpdate(req.params.id, {
 		title 		:  	req.body.title,
-	  content		: 	req.body.content,
+		content		: 	req.body.content,
 		summary		: 	req.body.summary,
 		tags			: 	req.body.tags.split(',')
 	}, function(err, data) {
@@ -133,4 +134,9 @@ exports.unpublish = function(req, res) {
 		if(err) throw err;
 		res.redirect('/profile');
 	});
+}
+
+exports.preview = function(req, res) {
+	var content = md(req.body.content);
+	res.send(content);
 }

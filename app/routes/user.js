@@ -65,7 +65,7 @@ module.exports = {
 				req.flash('danger', 'Woops, No user profile found for user: ' + req.params.name);
 				res.redirect('/');
 			} else {
-				Blog.find({author: userName}, function(err, blogs) {
+				Blog.find({author: userName, isPublished : true }, function(err, blogs) {
 					if(err) throw err;
 					res.render('users/show', {
 						title 				:   user.name,

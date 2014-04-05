@@ -32,7 +32,6 @@ module.exports = {
 	// Save Updated User Details
 	update : function(req, res) {
 		var updtUser = req.body;
-		console.log(updtUser);
 		User.findById(updtUser.userId, function(err, user) {
 			if(err) throw err;
 			// Verify if new password was submitted
@@ -65,7 +64,7 @@ module.exports = {
 				req.flash('danger', 'Woops, No user profile found for user: ' + req.params.name);
 				res.redirect('/');
 			} else {
-				Blog.find({author: userName, isPublished : true }, function(err, blogs) {
+				Blog.find({author: userName, isPublished : true }).sort({published: -1}).exec(function(err, blogs) {
 					if(err) throw err;
 					res.render('users/show', {
 						title 				:   user.name,

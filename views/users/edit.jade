@@ -26,5 +26,6 @@ block content
 			.form-group
 				label Biography
 				textarea.form-control(rows=15, name='bio')= user.bio
-			button.btn.btn-primary(type='submit') Submit 			
+			a(href='/profile').btn.btn-primary Back
+			button.btn.btn-success.pull-right(type='submit') Submit
 			hr

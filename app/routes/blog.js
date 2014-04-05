@@ -15,7 +15,7 @@ var Blog 	= require('../models/blog.js')
 
 // INDEX Route
 exports.index = function(req, res) {
-	Blog.find({"isPublished" : "true"}, function(err, blogs) {
+	Blog.find({"isPublished" : "true"}).sort({published: -1}).exec(function(err, blogs) {
 		if(err) throw err;
 		res.locals.messages = req.flash();
 		res.render('blog/home', {
@@ -136,7 +136,51 @@ exports.unpublish = function(req, res) {
 	});
 }
 
+// Preview blog post
 exports.preview = function(req, res) {
 	var content = md(req.body.content);
 	res.send(content);
+}
+
+// Add Comment
+exports.addComment = function(req, res) {
+	var comment = {
+		owner 	: req.body.commentOwner,
+		content : req.body.commentContent,
+		posted 	: new Date()
+	};
+	var blogId = req.body.blogId;
+	Blog.findById(blogId, function(err, blog) {
+		if(err)
+			res.send('Woops, something went wrong while adding comment! Please try again later!');
+		blog.comments.push(comment);
+		comment.id = blog.comments[blog.comments.length-1].id;
+		blog.save(function(err, blog) {
+			if(err) 
+				res.send('Woops, something went wrong while adding comment! Please try again later!');
+			comment.posted = comment.posted.toDateString();
+			res.send(comment);
+		});
+	});
+}
+
+// Delete Comment
+exports.delComment = function(req, res) {
+	var blogId = req.params.blogId;
+	var commentId = req.params.commentId;
+	Blog.findById(blogId, function(err, blog) {
+		if(err) throw err;
+		for (var i = 0; i < blog.comments.length; i++) {
+			if(blog.comments[i].id === commentId)
+				var index = i;
+		};
+		if(index>-1) {
+			blog.comments.splice(index,1);
+			blog.save(function(err) {
+				if(err)
+					res.render('404');
+				res.redirect('/blog/' + blog.title);
+			});
+		}
+	});
 }

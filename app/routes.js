@@ -107,7 +107,10 @@ module.exports = function(app, passport) {
 
   // Unpublish blog post
   app.get('/blog/:id/unpublish', isLoggedIn, blogRoutes.unpublish);
-
+  // Add Comment to blog post
+  app.post('/blog/addComment', blogRoutes.addComment);
+  // Delete comment on blog post
+  app.get('/blog/:blogId/delComment/:commentId', blogRoutes.delComment);
   // Show Blog
   app.get('/blog/:title', blogRoutes.show);
 

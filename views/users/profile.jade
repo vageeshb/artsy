@@ -2,48 +2,50 @@
 extends ../layouts/layout
 
 block content
-	.page-header.text-center
-		h1
-			span.fa.fa-anchor 
-			| Profile Page
-		a.btn.btn-primary.btn-sm(href='/profile/edit') Edit Profile
-		a.btn.btn-primary.btn-sm(href='/blog/new') Write A New Post
-
-	.row
-		.col-sm-12
-			h4
-				span.fa.fa-user 
-				|  User Info
-			.well.text-center
-				.col-sm-6
-					strong User Name: 
-					= user.name
-				.col-sm-6
-					strong Email: 
-					= user.email
-				br
-	.row
-		.col-sm-12
-			h4
-				span.fa.fa-book 
-				|  Blog Posts
-			table.blogList.table.table-bordered
-				thead
-					tr.text-info
-						th Post Name
-						th Created On
-						th Published?
-						th.text-center(colspan=3) Options
-				tbody
-					for blog in blogs
-						tr
-							td
-								a(href='/blog/' + blog.title)= blog.title
-							td= blog.published
-							td= blog.isPublished
-							- if(blog.isPublished)
-								td.text-center: a.btn.btn-sm.btn-primary(href='/blog/' + blog.id + '/unpublish') Unpublish
-							- else
-								td.text-center: a.btn.btn-sm.btn-primary(href='/blog/' + blog.id + '/publish') Publish
-							td.text-center: a.btn.btn-sm.btn-default(href='/blog/' + blog.id + '/edit') Edit
-							td.text-center: a.btn.btn-sm.btn-danger(href='/blog/' + blog.id + '/delete') Delete
+	.grid-row
+		.row
+			.page-header.text-center
+				h1
+					span.fa.fa-anchor 
+					| Profile Page
+				a.btn.btn-primary.btn-sm(href='/profile/edit') Edit Profile
+				a.btn.btn-primary.btn-sm(href='/blog/new') Write A New Post
+				a.btn.btn-primary.btn-sm(href='/blog/new') New Blog Post
+			.row
+				.col-sm-12
+					h4
+						span.fa.fa-user 
+						|  User Info
+					.well.text-center
+						.col-sm-6
+							strong User Name: 
+							= user.name
+						.col-sm-6
+							strong Email: 
+							= user.email
+						br
+			.row
+				.col-sm-12
+					h4
+						span.fa.fa-book 
+						|  Blog Posts
+					table.blogList.table.table-bordered
+						thead
+							tr.text-info
+								th Post Name
+								th Created On
+								th Published?
+								th.text-center(colspan=3) Options
+						tbody
+							for blog in blogs
+								tr
+									td
+										a(href='/blog/' + blog.title)= blog.title
+									td= blog.published.toDateString()
+									td= blog.isPublished
+									- if(blog.isPublished)
+										td.text-center: a.btn.btn-sm.btn-primary(href='/blog/' + blog.id + '/unpublish') Unpublish
+									- else
+										td.text-center: a.btn.btn-sm.btn-primary(href='/blog/' + blog.id + '/publish') Publish
+									td.text-center: a.btn.btn-sm.btn-default(href='/blog/' + blog.id + '/edit') Edit
+									td.text-center: a.btn.btn-sm.btn-danger(href='/blog/' + blog.id + '/delete') Delete

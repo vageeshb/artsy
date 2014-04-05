@@ -2,6 +2,7 @@ extends ../layouts/layout
 
 block content
 	link(rel="stylesheet" href="/css/highlight.min.css")
+	a.btn.btn-default.fa.fa-comment.visible-lg.visible-md(title='Add Comment', id='addCommentBtn', data-toggle='modal', href='#comment-modal')
 	.grid-row
 		.row.article(id=blog.id)
 			div.article-content
@@ -27,15 +28,43 @@ block content
 						a.btn.btn-primary(href='/blog/' + blog.id + '/edit') Edit
 						a.btn.btn-danger(href='/blog/' + blog.id + '/delete') Delete
 				div.article-body!= md(blog.content)
-			script
-				| $(window).scroll(function() {
-				|	var offset = $(window).scrollTop();
-				|	offset     = offset * 20;
-				|	$('#social-links a span').css({
-				|		'-moz-transform': 'rotate(' + offset + 'deg)',
-				|		'-webkit-transform': 'rotate(' + offset + 'deg)',
-				|		'-o-transform': 'rotate(' + offset + 'deg)',
-				|		'-ms-transform': 'rotate(' + offset + 'deg)',
-				|		'transform': 'rotate(' + offset + 'deg)',
-				|	});
-				| });
+	#addComment
+		#comment-modal.modal.fade
+			.modal-dialog
+				.modal-content
+					.modal-header
+						button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+						h4.modal-title Add Comment
+					.modal-body
+						input(type="hidden", id="blogId", value=blog.id).form-control
+						.form-group
+							label(for='commentOwner') Name
+							input#commentOwner.form-control(type='text', placeholder='Leave your name please')
+						.form-group
+							label(for='commentContent') Comment
+							textarea#commentContent.form-control(rows=3, placeholder='Add your comment here')
+					.modal-footer
+						button#closeModal.btn.btn-default(type='button', data-dismiss='modal') Close
+						button#submitComment.btn.btn-primary(type='button') Submit Comment
+		.grid-row
+			#commentWrapper.row
+				h2.text-center Comments
+				.text-center
+					a.btn.btn-primary(title='Add Comment', data-toggle='modal', href='#comment-modal') 
+						.fa.fa-comment   
+						|   Add Comment
+				#commentSection
+					-if(blog.comments.length>0)
+						for comment in blog.comments
+							.comments
+								div.comment-meta 
+									span: a= comment.owner
+									span  commented on 
+									span: a= comment.posted.toDateString()
+								div.content= comment.content
+								-if(user)
+									a(href='/blog/' + blog.id + '/delComment/' + comment.id) Delete Comment
+					-else
+						#noComment.text-center No comments yet!
+	script(type='text/javascript')
+		include ./show.min.js

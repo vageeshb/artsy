@@ -247,6 +247,9 @@ $font-size-4: 12px;
   .blog-content, .article-content {
     color: #777;
     padding: 10px;
+    h2 a {
+      color: #777;
+    }
   }
   .blog-body {
     padding-top: 20px;
@@ -281,6 +284,59 @@ pre {
   background: white;
 }
 
+// Comments Styling
+#addCommentBtn {
+  position: fixed;
+  right: 10px;
+  top: 50%;
+  z-index: 998;
+  width: 50px;
+  font-size: 24px;
+  background-color: white;
+}
+#addCommentBtn:hover, #addCommentBtn:focus {
+  background-color: #BC748C;
+  color: white;
+}
+#commentWrapper {
+  border-radius: 3px;
+  background-color: white;
+  color: #777;
+  padding: 10px;
+  #commentSection {
+    border-top: 1px solid $borderline-color;
+    padding-top: 5px;
+  }
+  a {
+    margin-bottom: 10px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+}
+.comments {
+  color: #777;
+  background-color: white;
+  margin: 5px;
+  padding: 5px;
+  border-bottom: 1px solid $borderline-color;
+  letter-spacing: 1px;
+  .comment-meta {
+    font-size: $font-size-4;
+    padding-bottom: 5px;
+    a {
+      color: #777;
+    }
+    a:focus, a:hover {
+      color: #777;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+  .content {
+    font-size: $font-size-3; 
+  }
+}
+
+// Social Link Styles
 #social-links {
   padding: 10px;
   text-align: center;
@@ -306,6 +362,7 @@ pre {
     margin-right: 5px;
   }
 }
+
 
 // User Styles
 .user-header {

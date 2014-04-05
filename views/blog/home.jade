@@ -4,15 +4,12 @@ block content
 	.grid-row
 		.row.header
 			div 
-				span.animated.bounceInLeft BL
-				span.animated.bounceInDown
+				span BL
+				span
 					img.img-circle(src='Blog_Logo.jpg')
-				span.animated.bounceInRight G!
+				span G!
 			div
 				.quote "Musings of a creator"
-		- if(user)
-			#menu.row.text-center
-				a.btn.btn-primary(href='/blog/new') New Blog Post
 		include ../layouts/flash
 		- if(blogs && blogs.length>0)
 			for blog in blogs
@@ -20,7 +17,8 @@ block content
 					img.img-responsive(src=blog.imageUrl)
 					.col-sm-12
 						div.blog-content
-							h2.text-center= blog.title
+							h2.text-center
+								a(href='/blog/' + blog.title)= blog.title
 							div.meta 
 								span.meta-item
 									span.fa.fa-user 
@@ -37,8 +35,8 @@ block content
 								div.text-center
 									a.btn.btn-primary(href='/blog/' + blog.id + '/edit') Edit
 									a.btn.btn-danger(href='/blog/' + blog.id + '/delete') Delete
-			script
-				include ../../public/js/blog.min.js
+			script(type='text/javascript')
+				include ./home.min.js
 		- else
 			.row.blog-post
 				h2.text-center Sorry! No Blog Posts Exist!

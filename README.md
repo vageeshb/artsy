@@ -8,3 +8,4 @@ Artsy - Blog
 * ~~Remove jquery and bootstrap async~~
 * User roles and panels
 * Commentor authentication
+* ~~Add search and permalink~~

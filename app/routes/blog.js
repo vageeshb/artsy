@@ -28,8 +28,8 @@ exports.index = function(req, res) {
 
 // Blog Post Show Route
 exports.show = function(req, res) {
-	var title = req.params.title;
-	Blog.findOne({'title' : title, isPublished: true}, function(err, blog) {
+	var permalink = req.params.permalink;
+	Blog.findOne({'permalink' : permalink, isPublished: true}, function(err, blog) {
 		if(err) {
 			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
 			res.redirect('/blog');
@@ -59,7 +59,11 @@ exports.create = function(req, res) {
 	newBlog.author 			= req.user.name;
 	newBlog.tags 				= req.body.tags.split(',');
 	newBlog.imageUrl		= req.body.blogImageUrl;
-	newBlog.isPublished 	= false;
+	newBlog.isPublished = false;
+	
+	var permalink 			= newBlog.title.replace( /\s/g, '_' );
+  permalink 					= permalink.replace( /\W/g, '' );
+  newBlog.permalink 	= permalink;
 	newBlog.save(function(err) {
 		if(err) throw err;
 		res.redirect('/blog/' + newBlog.title);
@@ -82,15 +86,18 @@ exports.edit = function(req, res) {
 
 // Blog Post Update Route
 exports.update = function(req, res) {
+	var permalink 			= req.body.title.replace( /\s/g, '_' );
+  permalink 					= permalink.replace( /\W/g, '' );
 	Blog.findByIdAndUpdate(req.params.id, {
 		title 		:  	req.body.title,
 		content		: 	req.body.content,
 		summary		: 	req.body.summary,
-		tags			: 	req.body.tags.split(',')
+		tags			: 	req.body.tags.split(','),
+		permalink : 	permalink
 	}, function(err, data) {
 		if(err) throw err;
 		console.log('Blog updated');
-		res.redirect('/blog/' + req.body.title);
+		res.redirect('/blog/' + permalink);
 	});
 }
 
@@ -114,7 +121,7 @@ exports.delete = function(req, res) {
 				console.log('Could not find the image');
 			console.log('Blog title image was deleted');
 		});
-		res.redirect('/blog');
+		res.redirect('/profile');
 	});
 }
 
@@ -179,8 +186,28 @@ exports.delComment = function(req, res) {
 			blog.save(function(err) {
 				if(err)
 					res.render('404');
-				res.redirect('/blog/' + blog.title);
+				res.redirect('/blog/' + blog.permalink);
 			});
 		}
 	});
+}
+
+// Search tags
+exports.search = function(req, res) {
+	var searchString = req.query.query;
+	if(searchString!='') {
+		Blog.find({isPublished: true, tags: { $regex: searchString}}).sort({published: -1}).exec(function(err, blogs) {
+			req.flash('success','The following post(s) matched your search criteria \'' + searchString + '\'');
+
+			res.locals.messages = req.flash();
+			res.render('blog/home', {
+				title 	: 'Blog',
+				blogs 	: blogs,
+				user 		: req.user
+			});	
+		});
+	} else {
+		req.flash('danger','No Criteria Specified!');
+		res.redirect('/');
+	}
 }

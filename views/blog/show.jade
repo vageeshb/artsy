@@ -21,7 +21,7 @@ block content
 					span.meta-item-tags.pull-right
 						span.fa.fa-tags
 						for tag in blog.tags
-							a(href='#', class='tag-' + tag)= tag
+							a(href='/q?query=' + tag, class='tag-' + tag)= tag
 				- if(user)
 					br
 					div.text-center

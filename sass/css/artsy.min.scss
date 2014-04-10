@@ -80,7 +80,19 @@ $font-size-4: 12px;
     color: #FFF;
     border: 3px solid #151515;
   }
+  form {
+    display: block;
+    float: left;
+    input, button {
+      background-color: #3D3D3D;
+      border: 1px solid #3D3D3D;
+      color: #FFFFFF;
+      font-size: 20px;
+      height: 50px;
+      padding: 10px;
+    }
 
+  }
   a {
     color: #F1F1F1;
     width: 100px;

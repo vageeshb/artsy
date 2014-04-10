@@ -9,7 +9,7 @@ module.exports = {
 
 	// Profile Page
 	profile : function(req, res) {
-		Blog.find({ author : req.user.name }, function(err, blogs) {
+		Blog.find({ author : req.user.name }).sort({published: -1}).exec(function(err, blogs) {
 			if(err) throw err;
 			res.render('users/profile', {
 				title :   'Profile',

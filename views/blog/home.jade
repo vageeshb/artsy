@@ -13,7 +13,7 @@ block content
 		include ../layouts/flash
 		- if(blogs && blogs.length>0)
 			for blog in blogs
-				.row.blog-post(title=blog.title)
+				.row.blog-post(title=blog.permalink)
 					img.img-responsive(src=blog.imageUrl)
 					.col-sm-12
 						div.blog-content
@@ -29,12 +29,11 @@ block content
 								span.meta-item-tags.pull-right
 									span.fa.fa-tags
 									for tag in blog.tags
-										a(href='#', class='tag-' + tag)= tag
+										a(href='/q?query=' + tag, class='tag-' + tag)= tag
 							div.blog-body= blog.summary
 							- if(user)
 								div.text-center
 									a.btn.btn-primary(href='/blog/' + blog.id + '/edit') Edit
-									a.btn.btn-danger(href='/blog/' + blog.id + '/delete') Delete
 			script(type='text/javascript')
 				include ./home.min.js
 		- else

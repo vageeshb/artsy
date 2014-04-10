@@ -17,6 +17,7 @@ var blogSchema = mongoose.Schema({
 	content			: { type: String, required: true},
 	summary			: { type: String, required: true},
 	author			: { type: String, required: true},
+	permalink 	: String,
 	imageUrl 		: { type: String},
 	tags				: [],
 	comments 		: [commentSchema],

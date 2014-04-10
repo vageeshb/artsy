@@ -80,6 +80,8 @@ module.exports = function(app, passport) {
     res.redirect('/');
   });
 
+  // QUERY SEARCH
+  app.get('/q', blogRoutes.search);
 
   // ============================================
   // BLOG Routes
@@ -112,7 +114,7 @@ module.exports = function(app, passport) {
   // Delete comment on blog post
   app.get('/blog/:blogId/delComment/:commentId', blogRoutes.delComment);
   // Show Blog
-  app.get('/blog/:title', blogRoutes.show);
+  app.get('/blog/:permalink', blogRoutes.show);
 
   // AWS Image Path
   app.get('/sign_s3', function(req, res){

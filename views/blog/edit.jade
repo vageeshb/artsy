@@ -5,8 +5,17 @@ block content
 	script(type='text/javascript' src='/js/s3upload.min.js')
 	link(rel="stylesheet" href="/css/highlight.min.css")
 	.grid-row
+		h3 Edit Blog post
+		hr
+		div#blogImage
+			label(for='blogTitleImage') Blog Title Image
+			div#blogTitleImageStatus.progress.hidden
+				div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
+			input(type="file", id="blogTitleImage")
+			div#blogTitleImageUrl.hidden
+			button(onClick = "uploadImage(blogTitleImage)", type="button").btn.btn-default Upload
+		hr
 		form(action='/blog/' + blog.id + '/update', method='POST', role='form')
-			legend Edit Blog Post
 			.form-group
 				label(for='blogTitle') Title
 				input.form-control(type='text', value= blog.title, id='blogTitle', name='title')
@@ -21,12 +30,12 @@ block content
 				textarea.form-control(rows="20", id="blogContent", name='content')= blog.content
 			button.btn.btn-primary(type='submit') Update
 			a#myPreview.btn.btn-primary(href='#preview-modal', data-toggle='modal') Preview
-		br
-		div#status.progress
-			div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
-		label(for='blogTitle') Blog Title Image
-		input(type="file", id="files")
-		br
+		hr
+		
+		button(type="button", id='addPostImages').btn.btn-primary Add post images?
+		hr
+		div#postImages
+
 		#preview-modal.modal.fade
 			.preview-modal-dialog
 				.preview-modal-header

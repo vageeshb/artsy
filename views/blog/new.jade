@@ -2,28 +2,51 @@ extends ../layouts/layout
 
 block content
 	script(type='text/javascript' src='/js/lodash.js')
-	script(type='text/javascript' src='/js/s3upload.min.js')
-	form(action='/blog/create', method='POST', role='form')
-		legend New Blog Post
-		.form-group
-			label(for='blogTitle') Title
-			input.form-control(type='text', placeholder='Blog Title', id='blogTitle', name='title')
-		.form-group
-			label(for='blogTags') Tags
-			input.form-control(type='text', placeholder='Blog Tags (Comma Separated Values)', id='blogTags', name='tags')
-		.form-group
-			label(for='blogSummary') Summary
-			textarea.form-control(rows="3", id='blogSummary', name='summary')
-		.form-group
-			label(for='blogContent') Blog Content
-			textarea.form-control(rows="20", id="blogContent", name='content')
-		.form-group
-			input(type='hidden', id='blogImageUrl', name='blogImageUrl')
-		button.btn.btn-primary(type='submit') Submit
-	br
-	div#status.progress
-		div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
-	label(for='blogTitle') Blog Title Image
-	input(type="file", id="files")
+	script(type='text/javascript' src='/js/s3upload.js')
+	link(rel="stylesheet" href="/css/highlight.min.css")
+	.grid-row
+		h3 New Blog post
+		hr
+		div#blogImage
+			label(for='blogTitleImage') Blog Title Image
+			div#blogTitleImageStatus.progress.hidden
+				div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
+			input(type="file", id="blogTitleImage")
+			div#blogTitleImageUrl.hidden
+			button(onClick = "uploadImage(blogTitleImage)", type="button").btn.btn-default Upload
+		hr
+		form(action='/blog/create', method='POST', role='form')
+			.form-group
+				label(for='blogTitle') Title
+				input.form-control(type='text', placeholder='Blog Title', id='blogTitle', name='title')
+			.form-group
+				label(for='blogTags') Tags
+				input.form-control(type='text', placeholder='Blog Tags (Comma Separated Values)', id='blogTags', name='tags')
+			.form-group
+				label(for='blogSummary') Summary
+				textarea.form-control(rows="3", id='blogSummary', name='summary')
+			.form-group
+				label(for='blogContent') Blog Content
+				textarea.form-control(rows="20", id="blogContent", name='content')
+			.form-group
+				input(type='hidden', id='blogImageUrl', name='blogImageUrl')
+			button.btn.btn-primary(type='submit') Submit
+			a#myPreview.btn.btn-primary(href='#preview-modal', data-toggle='modal') Preview
+		hr
+		
+		button(type="button", id='addPostImages').btn.btn-primary Add post images?
+		hr
+		div#postImages
+
+		#preview-modal.modal.fade
+			.preview-modal-dialog
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+				.preview-modal-body
+					#previewContent
+				.preview-modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+	
 	script
-		include ./upload.min.js
+		include ./upload.js
+	script
+		include ./edit.min.js

@@ -31,12 +31,12 @@
     S3Upload.prototype.handleFileSelect = function(file_element) {
       var f, files, output, _i, _len, _results;
       this.onProgress(0, 'Upload started.');
+      _results = [];
       files = file_element.files;
       output = [];
-      _results = [];
       for (_i = 0, _len = files.length; _i < _len; _i++) {
         f = files[_i];
-        _results.push(this.uploadFile(f));
+        _results.push(this.uploadFile(f, this.s3_object_name + '-' + (_i + 1) + '.PNG'));
       }
       return _results;
     };
@@ -55,11 +55,11 @@
       return xhr;
     };
 
-    S3Upload.prototype.executeOnSignedUrl = function(file, callback) {
+    S3Upload.prototype.executeOnSignedUrl = function(file, file_name, callback) {
       var this_s3upload, xhr;
       this_s3upload = this;
       xhr = new XMLHttpRequest();
-      xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + this.s3_object_name, true);
+      xhr.open('GET', this.s3_sign_put_url + '?s3_object_type=' + file.type + '&s3_object_name=' + file_name, true);
       xhr.overrideMimeType('text/plain; charset=x-user-defined');
       xhr.onreadystatechange = function(e) {
         var result;
@@ -67,12 +67,12 @@
           try {
             result = JSON.parse(this.responseText);
           } catch (error) {
-            this_s3upload.onError('Signing server returned some ugly/empty JSON: "' + this.responseText + '"');
+            this_s3upload.onError('File: "' + file.name + '" - Signing server returned some ugly/empty JSON: "' + this.responseText + '"');
             return false;
           }
           return callback(decodeURIComponent(result.signed_request), result.url);
         } else if (this.readyState === 4 && this.status !== 200) {
-          return this_s3upload.onError('Could not contact request signing server. Status = ' + this.status);
+          return this_s3upload.onError('File: "' + file.name + '" - Could not contact request signing server. Status = ' + this.status);
         }
       };
       return xhr.send();
@@ -83,18 +83,18 @@
       this_s3upload = this;
       xhr = this.createCORSRequest('PUT', url);
       if (!xhr) {
-        this.onError('CORS not supported');
+        this.onError('File: "' + file.name + '"!\nCORS not supported');
       } else {
         xhr.onload = function() {
           if (xhr.status === 200) {
             this_s3upload.onProgress(100, 'Upload completed.');
             return this_s3upload.onFinishS3Put(public_url);
           } else {
-            return this_s3upload.onError('Upload error: ' + xhr.status);
+            return this_s3upload.onError('File: "' + file.name + '" - Upload error: ' + xhr.status);
           }
         };
         xhr.onerror = function() {
-          return this_s3upload.onError('XHR error.');
+          return this_s3upload.onError('File: "' + file.name + '" - XHR error.');
         };
         xhr.upload.onprogress = function(e) {
           var percentLoaded;
@@ -109,10 +109,10 @@
       return xhr.send(file);
     };
 
-    S3Upload.prototype.uploadFile = function(file) {
+    S3Upload.prototype.uploadFile = function(file, file_name) {
       var this_s3upload;
       this_s3upload = this;
-      return this.executeOnSignedUrl(file, function(signedURL, publicURL) {
+      return this.executeOnSignedUrl(file, file_name, function(signedURL, publicURL) {
         return this_s3upload.uploadToS3(file, signedURL, publicURL);
       });
     };

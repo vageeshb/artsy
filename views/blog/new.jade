@@ -7,13 +7,15 @@ block content
 	.grid-row
 		h3 New Blog post
 		hr
-		div#blogImage
-			label(for='blogTitleImage') Blog Title Image
+		label(for='blogTitleImage') Blog Title Image
+		div#blogImage.upload
 			div#blogTitleImageStatus.progress.hidden
 				div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
 			input(type="file", id="blogTitleImage")
 			div#blogTitleImageUrl.hidden
-			button(onClick = "uploadImage(blogTitleImage)", type="button").btn.btn-default Upload
+			button(onClick = "uploadImage(blogTitleImage)", type="button", title="Upload File").btn.btn-sm.btn-primary
+				span.fa.fa-upload  
+				|   Upload Image(s)
 		hr
 		form(action='/blog/create', method='POST', role='form')
 			.form-group
@@ -27,16 +29,21 @@ block content
 				textarea.form-control(rows="3", id='blogSummary', name='summary')
 			.form-group
 				label(for='blogContent') Blog Content
+				.pull-right
+					a#help.btn.btn-sm.btn-link(href='#help-modal', data-toggle='modal')
+						| Help  
+						span.fa.fa-question  
 				textarea.form-control(rows="20", id="blogContent", name='content')
 			.form-group
 				input(type='hidden', id='blogImageUrl', name='blogImageUrl')
-			button.btn.btn-primary(type='submit') Submit
+			button.btn.btn-success.pull-right(type='submit') Submit
 			a#myPreview.btn.btn-primary(href='#preview-modal', data-toggle='modal') Preview
+			
 		hr
-		
-		button(type="button", id='addPostImages').btn.btn-primary Add post images?
-		hr
-		div#postImages
+		div.text-center
+			button(type="button", id='addPostImages').btn.btn-primary Add post images?
+			hr
+		div#postImages.upload
 
 		#preview-modal.modal.fade
 			.preview-modal-dialog
@@ -45,8 +52,16 @@ block content
 					#previewContent
 				.preview-modal-footer
 					button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+		#help-modal.modal.fade
+			.preview-modal-dialog
+				button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+				.preview-modal-body
+					#helpContent
+				.preview-modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
 	
 	script
-		include ./upload.js
+		include ./upload.min.js
 	script
 		include ./edit.min.js

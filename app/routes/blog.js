@@ -211,3 +211,12 @@ exports.search = function(req, res) {
 		res.redirect('/');
 	}
 }
+
+// Markdown Help
+exports.help = function(req, res) {
+	fs.readFile(__dirname + '/md.txt','utf8', function(err, data) {
+		if(err) throw err;
+		var content = md(data);
+		res.send(content);
+	});
+}

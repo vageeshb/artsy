@@ -7,7 +7,7 @@ function s3_upload(object_name, dom_selecter){
             $('#' + dom_selecter + 'Status div').attr('style', 'width: '+percent+'%;');
         },
         onFinishS3Put: function(public_url) {
-            var message = '<div>File uploaded successfully! Image url is: <code>' + public_url + '</code></div>';
+            var message = 'File uploaded successfully! Image url is: <code>' + public_url + '</code>';
             $('#' + dom_selecter + 'Url').append(message);
         },
         onError: function(status) {
@@ -25,7 +25,8 @@ function uploadImage(inputHandle) {
 $(document).ready(function() {
     $('#addPostImages').click(function() {
         var imageUpload = 'blogImage' + Math.floor((Math.random()*Math.pow(100,3))+1);
-        var newElement = '<div id="' + imageUpload + 'Status" class="progress hidden"><div class="progress-bar" style="width: 0%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar"></div></div><input id="' + imageUpload + '" type="file" multiple /><div id="' + imageUpload + 'Url" class="hidden"></div><button class="btn btn-default" type="button" onclick="uploadImage(' + imageUpload + ')">Upload</button>';
+        var newElement = '<div><code><strong>Note:</strong> You can select multiple files</code></div><div id="' + imageUpload + 'Status" class="progress hidden"><div class="progress-bar" style="width: 0%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar"></div></div><input id="' + imageUpload + '" type="file" multiple /><div class="text-center"><div id="' + imageUpload + 'Url" class="hidden"></div><button class="btn btn-sm btn-primary" type="button" onclick="uploadImage(' + imageUpload + ') " title="Upload File(s)"><span class=" fa fa-upload"></span> Upload Image(s)</button></div>';
         $('#postImages').append(newElement);
+        $(this).parent().hide();
     });
 });

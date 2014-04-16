@@ -12,4 +12,14 @@ $(document).ready( function() {
 				$('#previewContent').append(content);
 			});
 	});
+	$('#help').click(function(){
+		$.ajax({
+			url: '/markdownhelp',
+			type: 'GET'
+		})
+			.success(function(content) {
+				$('#helpContent').empty();
+				$('#helpContent').append(content);
+			});
+	});
 });

@@ -116,6 +116,9 @@ module.exports = function(app, passport) {
   // Show Blog
   app.get('/blog/:permalink', blogRoutes.show);
 
+  // Markdown Help
+  app.get('/markdownhelp', isLoggedIn, blogRoutes.help);
+
   // AWS Image Path
   app.get('/sign_s3', function(req, res){
     var object_name = req.query.s3_object_name;

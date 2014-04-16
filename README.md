@@ -4,7 +4,8 @@ Artsy - Blog
 ### Roadmap
 * ~~Comments~~
 * ~~Chronological order of posts~~
-* File uploading
+* ~~File uploading~~
+** Saving uploaded files with form
 * ~~Remove jquery and bootstrap async~~
 * User roles and panels
 * Commentor authentication

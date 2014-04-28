@@ -115,7 +115,8 @@ module.exports = function(app, passport) {
   app.get('/blog/:blogId/delComment/:commentId', blogRoutes.delComment);
   // Show Blog
   app.get('/blog/:permalink', blogRoutes.show);
-
+  // Show Blog preview
+  app.get('/blog/:permalink/preview', blogRoutes.show);
   // Markdown Help
   app.get('/markdownhelp', isLoggedIn, blogRoutes.help);
 

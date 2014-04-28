@@ -8,16 +8,21 @@ block content
 		h3 Edit Blog post
 		hr
 		label(for='blogTitleImage') Blog Title Image
+		div.text-center
+			img(src=blog.imageUrl, alt="Post Title Image").text-center
+		hr
 		div#blogImage.upload
+			h4 Change Title Image?
 			div#blogTitleImageStatus.progress.hidden
 				div(class="progress-bar", role="progressbar", aria-valuenow="0", aria-valuemin="0", aria-valuemax="100", style="width: 0%;")
 			input(type="file", id="blogTitleImage")
 			div#blogTitleImageUrl.hidden
-			button(onClick = "uploadImage(blogTitleImage)", type="button", title="Upload File").btn.btn-sm.btn-primary
+			button(onClick = "uploadImage(blogTitleImage, 'blogImageUrl')", type="button", title="Upload File").btn.btn-sm.btn-primary
 				span.fa.fa-upload  
 				|   Upload Image(s)
 		hr
 		form(action='/blog/' + blog.id + '/update', method='POST', role='form')
+			input(type="hidden", name="blogImageUrl", id="blogImageUrl", value=blog.imageUrl).form-control
 			.form-group
 				label(for='blogTitle') Title
 				input.form-control(type='text', value= blog.title, id='blogTitle', name='title')

@@ -1,4 +1,4 @@
-function s3_upload(object_name, dom_selecter){
+function s3_upload(object_name, dom_selecter, source){
     var s3upload = new S3Upload({
         s3_object_name: object_name,
         file_dom_selector: dom_selecter,
@@ -9,6 +9,9 @@ function s3_upload(object_name, dom_selecter){
         onFinishS3Put: function(public_url) {
             var message = 'File uploaded successfully! Image url is: <code>' + public_url + '</code>';
             $('#' + dom_selecter + 'Url').append(message);
+            if(source!=undefined) {
+                $('#'+source).val(public_url);
+            }
         },
         onError: function(status) {
             var message = '<div>' + status + '</div>';
@@ -16,10 +19,10 @@ function s3_upload(object_name, dom_selecter){
         }
     });
 }
-function uploadImage(inputHandle) {
+function uploadImage(inputHandle, source) {
     var object_name = Math.floor((Math.random()*Math.pow(100,3))+1);
     $('#' + inputHandle.id + 'Status').removeClass('hidden');
-    s3_upload(object_name, inputHandle.id);
+    s3_upload(object_name, inputHandle.id, source);
     $('#' + inputHandle.id + 'Url').removeClass('hidden');
 }
 $(document).ready(function() {

@@ -225,6 +225,8 @@ $font-size-4: 12px;
     margin-top: 5px;
     padding: 5px;
     border: 1px solid $borderline-color;
+    height: auto;
+    max-width: 100%;
   }
   .meta {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -433,6 +435,12 @@ pre {
     text-align: justify;
     hr {
       border-color: $borderline-color;
+    }
+    div p img {
+      height:auto;
+      width: 100%;
+      border: 1px solid black;
+      border-radius: 4px;
     }
   }
   .preview-modal-footer {

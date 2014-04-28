@@ -39,7 +39,7 @@ block content
 							for blog in blogs
 								tr
 									td
-										a(href='/blog/' + blog.title)= blog.title
+										a(href='/blog/' + blog.permalink + '/preview')= blog.title
 									td= blog.published.toDateString()
 									td= blog.isPublished
 									- if(blog.isPublished)

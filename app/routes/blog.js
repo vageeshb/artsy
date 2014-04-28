@@ -47,6 +47,27 @@ exports.show = function(req, res) {
 		 }
 	});
 }
+// Blog Post Public Preview Route
+exports.show = function(req, res) {
+	var permalink = req.params.permalink;
+	Blog.findOne({'permalink' : permalink}, function(err, blog) {
+		if(err) {
+			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
+			res.redirect('/blog');
+		}
+		if(!blog) {
+			req.flash('danger','Woops, looks like the blog post you are looking for does not exist!');
+			res.redirect('/blog');
+		} else {
+			res.render('blog/show', {
+				title	: blog.title,
+				blog 	: blog,
+				md 		: md,
+				user 	: req.user
+			});
+		 }
+	});
+}
 
 // Create Blog Post Route
 exports.create = function(req, res) {
@@ -66,7 +87,7 @@ exports.create = function(req, res) {
   newBlog.permalink 	= permalink;
 	newBlog.save(function(err) {
 		if(err) throw err;
-		res.redirect('/blog/' + newBlog.title);
+		res.redirect('/blog/' + permalink + '/preview');
 	});
 }
 
@@ -93,11 +114,12 @@ exports.update = function(req, res) {
 		content		: 	req.body.content,
 		summary		: 	req.body.summary,
 		tags			: 	req.body.tags.split(','),
-		permalink : 	permalink
+		permalink : 	permalink,
+		imageUrl	: 	req.body.blogImageUrl
 	}, function(err, data) {
 		if(err) throw err;
 		console.log('Blog updated');
-		res.redirect('/blog/' + permalink);
+		res.redirect('/blog/' + permalink + '/preview');
 	});
 }
 
@@ -204,7 +226,7 @@ exports.search = function(req, res) {
 				title 	: 'Blog',
 				blogs 	: blogs,
 				user 		: req.user
-			});	
+			});		
 		});
 	} else {
 		req.flash('danger','No Criteria Specified!');

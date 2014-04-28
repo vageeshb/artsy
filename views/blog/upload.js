@@ -27,6 +27,6 @@ $(document).ready(function() {
         var imageUpload = 'blogImage' + Math.floor((Math.random()*Math.pow(100,3))+1);
         var newElement = '<div><code><strong>Note:</strong> You can select multiple files</code></div><div id="' + imageUpload + 'Status" class="progress hidden"><div class="progress-bar" style="width: 0%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar"></div></div><input id="' + imageUpload + '" type="file" multiple /><div class="text-center"><div id="' + imageUpload + 'Url" class="hidden"></div><button class="btn btn-sm btn-primary" type="button" onclick="uploadImage(' + imageUpload + ') " title="Upload File(s)"><span class=" fa fa-upload"></span> Upload Image(s)</button></div>';
         $('#postImages').append(newElement);
-        $(this).parent().hide();
+        $(this).hide();
     });
 });
